@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #backgammon {
+        display: flex;
+        flex-direction: row;
+        height: 100vh
+      }
+
+      .row {
+        display: flex;
+        height: 45%;
+      }
+
+      .column {
+        flex: 1;
+        padding: 10px;
+        margin: 3px;
+        border: 1px solid #000;
+        box-sizing: border-box;
+        background-color: yellow;
+      }
+
+      #playing-field {
+        flex-grow: 1;
+      }
+
+      .side {
+        width: 20%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="backgammon">
+      <div id="left-side" class="side">
+        0
+        0
+        0
+      </div>
+      <div id="playing-field">
+        <div class="row">
+          <div class="column">Column 1</div>
+          <div class="column">Column 2</div>
+          <div class="column">Column 3</div>
+          <div class="column">Column 4</div>
+          <div class="column">Column 5</div>
+          <div class="column">Column 6</div>
+          <div class="column">Column 7</div>
+          <div class="column">Column 8</div>
+          <div class="column">Column 9</div>
+          <div class="column">Column 10</div>
+          <div class="column">Column 11</div>
+          <div class="column">Column 12</div>
+        </div>
+        <div class="row">
+          <div class="column">Column 1</div>
+          <div class="column">Column 2</div>
+          <div class="column">Column 3</div>
+          <div class="column">Column 4</div>
+          <div class="column">Column 5</div>
+          <div class="column">Column 6</div>
+          <div class="column">Column 7</div>
+          <div class="column">Column 8</div>
+          <div class="column">Column 9</div>
+          <div class="column">Column 10</div>
+          <div class="column">Column 11</div>
+          <div class="column">Column 12</div>
+        </div>
+      </div>
+      <div id="right-side" class="side">
+        0
+        0
+        0
+      </div>
+    </div>
+  </body>
+</html>
+
