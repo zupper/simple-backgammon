@@ -2,6 +2,12 @@ body {
   margin: 0;
   padding: 0;
 }
+
+#default-setup-button {
+  position: absolute;
+  top: 700px;
+}
+
 #backgammon {
   display: flex;
   flex-direction: row;
