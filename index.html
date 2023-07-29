@@ -1,79 +1,83 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      #backgammon {
-        display: flex;
-        flex-direction: row;
-        height: 100vh
-      }
-
-      .row {
-        display: flex;
-        height: 45%;
-      }
-
-      .column {
-        flex: 1;
-        padding: 10px;
-        margin: 3px;
-        border: 1px solid #000;
-        box-sizing: border-box;
-        background-color: yellow;
-      }
-
-      #playing-field {
-        flex-grow: 1;
-      }
-
-      .side {
-        width: 20%;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
   </head>
   <body>
     <div id="backgammon">
-      <div id="left-side" class="side">
-        0
-        0
-        0
+      <div id="left-side" class="side dropzone">
+        <div class="checker black" id="black1"></div>
+        <div class="checker black" id="black2"></div>
+        <div class="checker black" id="black3"></div>
+        <div class="checker black" id="black4"></div>
+        <div class="checker black" id="black5"></div>
+        <div class="checker black" id="black6"></div>
+        <div class="checker black" id="black7"></div>
+        <div class="checker black" id="black8"></div>
+        <div class="checker black" id="black9"></div>
+        <div class="checker black" id="black10"></div>
+        <div class="checker black" id="black11"></div>
+        <div class="checker black" id="black12"></div>
+        <div class="checker black" id="black13"></div>
+        <div class="checker black" id="black14"></div>
+        <div class="checker black" id="black15"></div>
       </div>
       <div id="playing-field">
-        <div class="row">
-          <div class="column">Column 1</div>
-          <div class="column">Column 2</div>
-          <div class="column">Column 3</div>
-          <div class="column">Column 4</div>
-          <div class="column">Column 5</div>
-          <div class="column">Column 6</div>
-          <div class="column">Column 7</div>
-          <div class="column">Column 8</div>
-          <div class="column">Column 9</div>
-          <div class="column">Column 10</div>
-          <div class="column">Column 11</div>
-          <div class="column">Column 12</div>
+        <div id="upper" class="row">
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
         </div>
-        <div class="row">
-          <div class="column">Column 1</div>
-          <div class="column">Column 2</div>
-          <div class="column">Column 3</div>
-          <div class="column">Column 4</div>
-          <div class="column">Column 5</div>
-          <div class="column">Column 6</div>
-          <div class="column">Column 7</div>
-          <div class="column">Column 8</div>
-          <div class="column">Column 9</div>
-          <div class="column">Column 10</div>
-          <div class="column">Column 11</div>
-          <div class="column">Column 12</div>
+        <div id="lower" class="row">
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+          <div class="column dropzone"></div>
+        </div>
+        <div id="dice" onclick="roll()">
+          <div class="die">0</div>
+          <div class="die">0</div>
         </div>
       </div>
-      <div id="right-side" class="side">
-        0
-        0
-        0
+      <div id="right-side" class="side dropzone">
+        <div class="checker white" id="white1"></div>
+        <div class="checker white" id="white2"></div>
+        <div class="checker white" id="white3"></div>
+        <div class="checker white" id="white4"></div>
+        <div class="checker white" id="white5"></div>
+        <div class="checker white" id="white6"></div>
+        <div class="checker white" id="white7"></div>
+        <div class="checker white" id="white8"></div>
+        <div class="checker white" id="white9"></div>
+        <div class="checker white" id="white10"></div>
+        <div class="checker white" id="white11"></div>
+        <div class="checker white" id="white12"></div>
+        <div class="checker white" id="white13"></div>
+        <div class="checker white" id="white14"></div>
+        <div class="checker white" id="white15"></div>
       </div>
     </div>
+    <script>
+      startup();
+    </script>
   </body>
 </html>
 
