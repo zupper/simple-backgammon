@@ -3,7 +3,7 @@ body {
   padding: 0;
 }
 
-#default-setup-button {
+#controls {
   position: absolute;
   top: 700px;
 }
@@ -101,6 +101,7 @@ body {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  transition: background 0.1s;
 }
 
 .die {

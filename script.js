@@ -31,6 +31,9 @@ function drop_handler(ev) {
 }
 
 function roll() {
+  let diceDiv = document.getElementById('dice');
+  diceDiv.style.backgroundColor = '#647687';
+  setTimeout(() => { diceDiv.style.backgroundColor = '#ffffff'; }, 100);
   let dice = document.querySelectorAll('.die');
   dice.forEach(function(die) {
     die.textContent = Math.floor(Math.random() * 6) + 1;
@@ -75,4 +78,22 @@ function defaultSetup() {
 
   document.getElementById('lc12').appendChild(document.getElementById('black14'));
   document.getElementById('lc12').appendChild(document.getElementById('black15'));
+}
+
+function empty() {
+  const whites = document.querySelectorAll(`[id^="white"]`);
+  const blacks = document.querySelectorAll(`[id^="black"]`);
+
+  const leftSide = document.getElementById('left-side');
+  const rightSide = document.getElementById('right-side');
+
+  for (let w of whites) {
+    rightSide.appendChild(w);
+  }
+
+  for (let b of blacks) {
+    leftSide.appendChild(b);
+  }
+
+
 }
