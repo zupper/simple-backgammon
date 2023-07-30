@@ -4,6 +4,7 @@ function startup() {
   for (c of checkers) {
     c.draggable = true;
     c.ondragstart = dragstart_handler;
+    c.ondblclick = take;
   }
 
   // setup drop zones
@@ -28,6 +29,16 @@ function drop_handler(ev) {
   const data = ev.dataTransfer.getData("application/my-app");
   this.appendChild(document.getElementById(data));
   ev.preventDefault();
+}
+
+function take(e) {
+  if (this.classList.contains('black')) {
+    let leftSide = document.getElementById('left-side').appendChild(this);
+  }
+  else if (this.classList.contains('white')) {
+    let rightSide = document.getElementById('right-side').appendChild(this);
+  }
+  e.preventDefault();
 }
 
 function roll() {
