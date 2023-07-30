@@ -15,9 +15,32 @@ function startup() {
   }
 }
 
+function drawChecker(n, color) {
+  const canvas = document.createElement("canvas");
+  const ratio = window.devicePixelRatio || 1;
+  canvas.width = canvas.height = 54 * ratio;
+
+  const context = canvas.getContext('2d');
+
+  context.beginPath();
+  context.arc(27 * ratio, 27 * ratio, 26 * ratio, 0, 2 * Math.PI, false);
+  context.fillStyle = color;
+  context.fill();
+  context.lineWidth = 2 * ratio;
+  context.strokeStyle = 'black';
+  context.stroke();
+
+  return canvas;
+}
+
 function dragstart_handler(ev) {
+  const color = window.getComputedStyle(this).backgroundColor;
   ev.dataTransfer.setData("application/my-app", ev.target.id);
   ev.dataTransfer.effectAllowed = "move";
+
+  const offsetX = ev.clientX - ev.explicitOriginalTarget.offsetLeft;
+  const offsetY = ev.clientY - ev.explicitOriginalTarget.offsetTop;
+  ev.dataTransfer.setDragImage(drawChecker(1, color), offsetX, offsetY);
 }
 
 function dragover_handler(ev) {
