@@ -17,7 +17,7 @@ function startup() {
   defaultSetup();
 }
 
-function drawChecker(n, color) {
+function drawChecker(color) {
   const canvas = document.createElement("canvas");
   const ratio = window.devicePixelRatio || 1;
   canvas.width = canvas.height = 54 * ratio;
@@ -35,14 +35,62 @@ function drawChecker(n, color) {
   return canvas;
 }
 
-function dragStart(ev) {
-  const color = window.getComputedStyle(this).backgroundColor;
-  ev.dataTransfer.setData("application/my-app", ev.target.id);
-  ev.dataTransfer.effectAllowed = "move";
+function identifyDraggedCheckers(e) {
+  const target = e.target;
+  if (target.parentElement.id.includes('side')) {
+    return [target];
+  }
 
+  const siblings = Array.from(e.target.parentElement.children);
+  const targetIndex = siblings.findIndex(e => e.id == target.id);
+  let result = siblings.filter((_, idx) => idx >= targetIndex);
+  return result;
+}
+
+function getColor(el) {
+  return window.getComputedStyle(el).backgroundColor;
+}
+
+function merge(cs) {
+  const totalHeight = cs.reduce((acc, c) => acc + c.height, 0);
+  const maxWidth = cs.reduce((acc, c) => c.width > acc ? c.width : acc, 0);
+
+  let result = document.createElement("canvas");
+  const context = result.getContext("2d");
+  result.width = maxWidth;
+  result.height = totalHeight;
+
+  cs.reduce((offset, c) => {
+    context.drawImage(c, 0, offset);
+    return c.height + offset;
+  }, 0);
+
+  return result;
+}
+
+function getOffsets(ev) {
   const offsetX = ev.clientX - ev.explicitOriginalTarget.offsetLeft;
   const offsetY = ev.clientY - ev.explicitOriginalTarget.offsetTop;
-  ev.dataTransfer.setDragImage(drawChecker(1, color), offsetX, offsetY);
+
+  return [offsetX, offsetY];
+}
+
+function dragStart(ev) {
+  const dragged = identifyDraggedCheckers(ev);
+  const dragImages = dragged.map(c => drawChecker(getColor(c)));
+
+  ev.dataTransfer.setData("application/simple-backgammon", JSON.stringify(dragged.map(d => d.id)));
+  ev.dataTransfer.effectAllowed = "move";
+
+  const shouldReverse = ev.target.parentElement.parentElement.id == 'lower';
+  const checkerHeight = dragged[0].clientHeight;
+
+  const offsets = getOffsets(ev);
+  const offsetX = offsets[0];
+  const offsetY = shouldReverse ? offsets[1] + (checkerHeight * (dragged.length - 1)) : offsets[1];
+
+  const dragImage = shouldReverse ? merge(dragImages.reverse()) : merge(dragImages);
+  ev.dataTransfer.setDragImage(dragImage, offsetX, offsetY);
 }
 
 function dragOver(ev) {
@@ -51,8 +99,9 @@ function dragOver(ev) {
 }
 
 function drop(ev) {
-  const data = ev.dataTransfer.getData("application/my-app");
-  this.appendChild(document.getElementById(data));
+  const ids = JSON.parse(ev.dataTransfer.getData("application/simple-backgammon"));
+
+  ids.forEach(id => this.appendChild(document.getElementById(id)));
   ev.preventDefault();
 }
 
