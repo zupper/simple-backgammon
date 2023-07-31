@@ -117,6 +117,10 @@ body {
   background-color: #eeeeee;
 }
 
+.checker.in-transit {
+  background-color: #33333377;
+}
+
 .die {
   width: 50px;
   height: 50px;

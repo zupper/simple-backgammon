@@ -56,10 +56,10 @@ function merge(cs) {
   const maxWidth = cs.reduce((acc, c) => c.width > acc ? c.width : acc, 0);
 
   let result = document.createElement("canvas");
-  const context = result.getContext("2d");
   result.width = maxWidth;
   result.height = totalHeight;
 
+  const context = result.getContext("2d");
   cs.reduce((offset, c) => {
     context.drawImage(c, 0, offset);
     return c.height + offset;
@@ -78,6 +78,8 @@ function getOffsets(ev) {
 function dragStart(ev) {
   const dragged = identifyDraggedCheckers(ev);
   const dragImages = dragged.map(c => drawChecker(getColor(c)));
+
+  dragged.forEach(d => d.classList.add('in-transit'));
 
   ev.dataTransfer.setData("application/simple-backgammon", JSON.stringify(dragged.map(d => d.id)));
   ev.dataTransfer.effectAllowed = "move";
@@ -101,7 +103,11 @@ function dragOver(ev) {
 function drop(ev) {
   const ids = JSON.parse(ev.dataTransfer.getData("application/simple-backgammon"));
 
-  ids.forEach(id => this.appendChild(document.getElementById(id)));
+  ids.forEach(id => {
+    const c = document.getElementById(id);
+    c.classList.remove('in-transit');
+    this.appendChild(c);
+  });
   ev.preventDefault();
 }
 
