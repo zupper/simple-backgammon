@@ -14,6 +14,8 @@ function startup() {
     d.ondragover = dragOver;
   }
 
+  document.body.ondragend = dragEnd;
+
   defaultSetup();
 }
 
@@ -77,9 +79,6 @@ function getOffsets(ev) {
 
 function dragStart(ev) {
   const dragged = identifyDraggedCheckers(ev);
-  const dragImages = dragged.map(c => drawChecker(getColor(c)));
-
-  dragged.forEach(d => d.classList.add('in-transit'));
 
   ev.dataTransfer.setData("application/simple-backgammon", JSON.stringify(dragged.map(d => d.id)));
   ev.dataTransfer.effectAllowed = "move";
@@ -91,13 +90,22 @@ function dragStart(ev) {
   const offsetX = offsets[0];
   const offsetY = shouldReverse ? offsets[1] + (checkerHeight * (dragged.length - 1)) : offsets[1];
 
-  const dragImage = shouldReverse ? merge(dragImages.reverse()) : merge(dragImages);
-  ev.dataTransfer.setDragImage(dragImage, offsetX, offsetY);
+  const dragImages = dragged.map(c => drawChecker(getColor(c)));
+  const mergedImage = shouldReverse ? merge(dragImages.reverse()) : merge(dragImages);
+  ev.dataTransfer.setDragImage(mergedImage, offsetX, offsetY);
+
+  dragged.forEach(d => d.classList.add('in-transit'));
+}
+
+function dragEnd(ev) {
+  const ids = JSON.parse(ev.dataTransfer.getData("application/simple-backgammon"));
+  ids.forEach(id => document.getElementById(id).classList.remove('in-transit'));
+  ev.preventDefault();
 }
 
 function dragOver(ev) {
-  ev.preventDefault();
   ev.dataTransfer.dropEffect = "move";
+  ev.preventDefault();
 }
 
 function drop(ev) {
@@ -108,6 +116,7 @@ function drop(ev) {
     c.classList.remove('in-transit');
     this.appendChild(c);
   });
+
   ev.preventDefault();
 }
 
