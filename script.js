@@ -3,16 +3,18 @@ function startup() {
   const checkers = document.getElementsByClassName("checker");
   for (c of checkers) {
     c.draggable = true;
-    c.ondragstart = dragstart_handler;
+    c.ondragstart = dragStart;
     c.ondblclick = take;
   }
 
   // setup drop zones
   const dropzones = document.getElementsByClassName("dropzone");
   for (d of dropzones) {
-    d.ondrop = drop_handler;
-    d.ondragover = dragover_handler;
+    d.ondrop = drop;
+    d.ondragover = dragOver;
   }
+
+  defaultSetup();
 }
 
 function drawChecker(n, color) {
@@ -33,7 +35,7 @@ function drawChecker(n, color) {
   return canvas;
 }
 
-function dragstart_handler(ev) {
+function dragStart(ev) {
   const color = window.getComputedStyle(this).backgroundColor;
   ev.dataTransfer.setData("application/my-app", ev.target.id);
   ev.dataTransfer.effectAllowed = "move";
@@ -43,12 +45,12 @@ function dragstart_handler(ev) {
   ev.dataTransfer.setDragImage(drawChecker(1, color), offsetX, offsetY);
 }
 
-function dragover_handler(ev) {
+function dragOver(ev) {
   ev.preventDefault();
   ev.dataTransfer.dropEffect = "move";
 }
 
-function drop_handler(ev) {
+function drop(ev) {
   const data = ev.dataTransfer.getData("application/my-app");
   this.appendChild(document.getElementById(data));
   ev.preventDefault();
@@ -56,10 +58,10 @@ function drop_handler(ev) {
 
 function take(e) {
   if (this.classList.contains('black')) {
-    let leftSide = document.getElementById('left-side').appendChild(this);
+    document.getElementById('left-side').appendChild(this);
   }
   else if (this.classList.contains('white')) {
-    let rightSide = document.getElementById('right-side').appendChild(this);
+    document.getElementById('right-side').appendChild(this);
   }
   e.preventDefault();
 }
@@ -128,6 +130,4 @@ function empty() {
   for (let b of blacks) {
     leftSide.appendChild(b);
   }
-
-
 }
